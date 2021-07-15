@@ -4,6 +4,7 @@ import Button from "./Button";
 import SortPopup from "./SortPopup";
 import Home from "../pages/Home";
 import Cart from "../pages/Cart";
+import PizzaBlock from '../components/PizzaBlock'
 
 
 export {
@@ -12,5 +13,6 @@ export {
     Button,
     SortPopup,
     Home,
-    Cart
+    Cart,
+    PizzaBlock
 }
