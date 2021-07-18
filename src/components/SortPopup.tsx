@@ -1,24 +1,29 @@
-import React, {MutableRefObject, useEffect, useState} from "react";
-
-type SortPopupType = {
-    items: Array<string>
+import React, {useEffect, useState} from "react";
+type ItemsPopUpType = {
+    name: 'популярности' | 'цене' | 'алфавиту'
+    type: string
 }
-const SortPopup: React.FC<SortPopupType> = ({items}) => {
+type SortPopupType = {
+    items: Array<ItemsPopUpType>
+    activeSort: string
+    setNamePopup: (item: string) => void
+}
+const SortPopup: React.FC<SortPopupType> = ({items, activeSort, setNamePopup}) => {
 
-    const [activeItem, setActiveItem] = useState<number>(0)
     const [visiblePopup, setVisiblePopup] = useState<boolean>(false)
     const sortRef = React.useRef(null)
 
     const toggleVisiblePopup = () => {
         setVisiblePopup( prevState => !prevState)
     }
-    const onSelectItem = (item: number) => {
-        setActiveItem(prevState => item)
-        setVisiblePopup(prevState => false)
+    const onSelectItem = (item: string) => {
+        setNamePopup(item)
+        setVisiblePopup(false)
     }
     const handleOutsideClick = (e: any) => {
-            if (!e.path.includes(sortRef.current)){
-                setVisiblePopup( prevState => false )
+        const path = e.path || (e.composedPath && e.composedPath())
+            if (!path.includes(sortRef.current)){
+                setVisiblePopup( false )
             }
 
 
@@ -26,6 +31,8 @@ const SortPopup: React.FC<SortPopupType> = ({items}) => {
     useEffect(() => {
         document.body.addEventListener('click',handleOutsideClick)
     },[])
+
+const sort = items.find(item => item.type === activeSort)
     return <div ref={sortRef} className="sort">
         <div className="sort__label">
             <svg className={visiblePopup ? 'rotated': ''}
@@ -41,17 +48,17 @@ const SortPopup: React.FC<SortPopupType> = ({items}) => {
                 />
             </svg>
             <b>Сортировка по:</b>
-            <span onClick={toggleVisiblePopup}>{items[activeItem]}</span>
+            <span onClick={toggleVisiblePopup}>{ sort && sort.name}</span>
         </div>
         { visiblePopup &&<div className="sort__popup">
             <ul>
                 {
                     items && items.map((item,index) => {
                         return <li
-                            onClick={() => onSelectItem(index)}
-                            className={activeItem === index ? 'active': ''}
-                            key={`${item}_${index}`}>
-                            {item}
+                            onClick={() => onSelectItem(item.type)}
+                            className={activeSort === item.type ? 'active': ''}
+                            key={`${item.name}_${index}`}>
+                            {item.name}
                         </li>
                     })
                 }

@@ -1,11 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './scss/app.scss'
 import {Header,Home,Cart} from "./components";
 import {Route} from 'react-router-dom'
-import axios from "axios";
-import {useDispatch, useSelector} from "react-redux";
-import {setPizzas} from "./redux/reducers/pizzaReducer";
-import {RootReducerType} from "./redux/store";
 
 export type OnePizza = {
     id: number,
@@ -18,18 +14,8 @@ export type OnePizza = {
     rating: number
 }
 
-export  type PizzasType = Array<OnePizza>
-
 
 function App() {
-    const dispatch = useDispatch()
-    const isLoading = useSelector<RootReducerType, boolean>(state =>state.pizza.isLoading )
-
-    useEffect(() => {
-       axios.get<Array<OnePizza>>('http://localhost:3001/pizzas')
-           .then(res => dispatch(setPizzas(res.data)))
-    },[])
-
   return (
       <div className="wrapper">
 

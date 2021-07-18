@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {type} from "os";
 import classNames from "classnames";
+
 type PizzaBlockPropsType = {
     id: number,
     imageUrl: string
@@ -11,6 +11,7 @@ type PizzaBlockPropsType = {
     category: number
     rating: number
 }
+
 const PizzaBlock:React.FC<PizzaBlockPropsType> = ({name, imageUrl,price,types, sizes}) => {
     const availableTypes = ['Тонкое', 'Традиционное']
     const availableSizes = [26, 30, 40]
@@ -36,7 +37,7 @@ const PizzaBlock:React.FC<PizzaBlockPropsType> = ({name, imageUrl,price,types, s
                 <ul>
                     {availableTypes && availableTypes.map((item, index) => {
 
-                            return <li
+                            return<li
                                 key={item}
                                 onClick={ () => onSelectType(index)}
                                 className={
@@ -51,15 +52,16 @@ const PizzaBlock:React.FC<PizzaBlockPropsType> = ({name, imageUrl,price,types, s
                     }
                 </ul>
                 <ul>
-                    {availableSizes.map((size,index) => {
+                    {availableSizes.map((size) => {
                         return <li
+                            key={size}
                             onClick={() => onSelectSize(size)}
                             className={classNames({
                                 active: activeSize === size,
                                 disabled: !sizes.includes(size)
 
                             })}
-                            key={size}>
+                            >
                             {size} см.
                         </li>
                     })}

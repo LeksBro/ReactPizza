@@ -1,14 +1,14 @@
 
-type InitialStateType = {
-    sortBy: string
-    category: number
+export type InitialStateType = {
+    sortBy: 'rating' | 'price' | 'popular'
+    category: number | null
 }
 type ActionsFiltersType = SetSortByType | SetCategoryType
 
 
 const initialState: InitialStateType = {
-    sortBy: 'popular',
-    category: 0,
+    sortBy: 'rating',
+    category: null,
 }
 
 export const filtersReducer = (state = initialState, action: ActionsFiltersType) => {
@@ -34,7 +34,7 @@ export const filtersReducer = (state = initialState, action: ActionsFiltersType)
 export const setSortBy = (name: string) => {
     return {type: 'SET_SORT_BY', payload: name} as const
 }
-export const setCategory = (value: number) => {
+export const setCategory = (value: number | null) => {
     return {type: 'SET_CATEGORY', payload: value} as const
 }
 
